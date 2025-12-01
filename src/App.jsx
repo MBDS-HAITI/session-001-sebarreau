@@ -15,9 +15,13 @@ function Header() {
 }
 
 function MainContent() {
+   const now = new Date();
   return (
     <main style={{ textAlign: "center", marginTop: "20px" }}>
-      <p>Ici, nous afficherons des informations interessantes :)</p>
+      <p>
+        Bonjour, on est le {now.toLocaleDateString()} et il est {now.toLocaleTimeString()}
+      </p>
+     {/*  <p>Ici, nous afficherons des informations interessantes :)</p>*/ }
     </main>
   );
 }
