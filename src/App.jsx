@@ -22,12 +22,28 @@ function MainContent() {
   );
 }
 
+function Footer() {
+  return (
+    <footer
+      style={{
+        textAlign: "center",
+        padding: "20px",
+        marginBottom: "40px",
+        color: "#ccc"
+      }}
+    >
+      Tous droits réservés - Barreau Sachy Edvaelle
+    </footer>
+  );
+}
+
 
 function App() {
   return (
     <>
       <Header />
       <MainContent />
+      <Footer />
     </>
   );
 }

@@ -148,3 +148,23 @@ main h2 {
 #tab-content code {
   font-size: 1rem;
 }
+
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+main {
+  flex: 1;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  margin-top: auto;
+  background-color: transparent;
+  color: #ccc;
+}
