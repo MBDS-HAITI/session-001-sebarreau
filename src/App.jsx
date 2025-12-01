@@ -27,7 +27,8 @@ function MainContent() {
 }
 
 function Footer() {
-  return (
+ const annee = new Date().getFullYear();
+   return (
     <footer
       style={{
         textAlign: "center",
@@ -36,7 +37,7 @@ function Footer() {
         color: "#ccc"
       }}
     >
-      Tous droits réservés - Barreau Sachy Edvaelle
+    {annee} - Barreau Sachy Edvaelle, Tous droits réservés.
     </footer>
   );
 }
