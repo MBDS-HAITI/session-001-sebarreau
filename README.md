@@ -60,7 +60,7 @@ npm run dev
 1. Modifier le composant MainContent du TD précédent pour afficher le texte suivant "Bonjour, on est le [Jour], [Mois], [Annee] et il est [Heure]:[Minute]:[Second]"
 2. Commit avec le message "TD02: Afficher la date et l'heure du jour"
 3. Modifier le footer pour y afficher également l'année, au format "© [Annee] - [Prenom].[Nom], Tous droits réservés."
-4. Commit avec le message "TD02 : Afficher l'année dans le Footer"
+4. Commit avec le message g
 5. Push
 
 ## TD03 : Utiliser les props

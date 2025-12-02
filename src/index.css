@@ -9,7 +9,7 @@ html {
   line-height: 1.5;
 
   color: #ebe7ef;
-  background: radial-gradient(#280a48, #20043d);
+  background: radial-gradient(#4e452b, #ec8c10);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -34,7 +34,7 @@ header h1 {
   margin: 0;
   font-family: "Roboto Condensed", sans-serif;
   font-size: 5rem;
-  background: linear-gradient(40deg, #ea00ff, #ea00ff, #03d5ff, #03d5ff);
+  background: linear-gradient(40deg, #e2dbe2, #e5a3eb, #ecf7f9, #b4d4da);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));

@@ -1,7 +1,6 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import mbdslogo from './assets/mbds_logo_transparent.svg'
-import viteLogo from '/vite.svg'
+import notes from "../data.json";
+import NoteDetail from "./Components/NoteDetail";
 import './App.css'
 
 function Header() {
@@ -26,6 +25,12 @@ function MainContent() {
   );
 }
 
+function getRandomNote(list) {
+  return list[Math.floor(Math.random() * list.length)];
+}
+
+
+
 function Footer() {
  const annee = new Date().getFullYear();
    return (
@@ -44,10 +49,13 @@ function Footer() {
 
 
 function App() {
+  const randomNote = getRandomNote(notes);
+
   return (
     <>
       <Header />
       <MainContent />
+      <NoteDetail note={randomNote} />
       <Footer />
     </>
   );
