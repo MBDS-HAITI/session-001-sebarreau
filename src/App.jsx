@@ -1,6 +1,7 @@
 import mbdslogo from './assets/mbds_logo_transparent.svg'
 import notes from "../data.json";
 import NoteDetail from "./Components/NoteDetail";
+import Menu from "./Components/Menu";
 import './App.css'
 
 function Header() {
@@ -55,7 +56,8 @@ function App() {
     <>
       <Header />
       <MainContent />
-      <NoteDetail note={randomNote} />
+      <Menu/>
+    <NoteDetail note={randomNote} /> 
       <Footer />
     </>
   );

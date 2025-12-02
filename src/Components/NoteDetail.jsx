@@ -1,6 +1,6 @@
 function NoteDetail({ note }) {
   return (
-    <div>
+    <div className="note-box">
       <p>ID unique : {note.unique_id}</p>
       <p>Cours : {note.course}</p>
       <p>Étudiant : {note.student.firstname} {note.student.lastname}</p>
