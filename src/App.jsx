@@ -8,13 +8,15 @@ import "./App.css";
 
 function Header() {
   return (
-    <header style={{ textAlign: "center", marginBottom: "20px" }}>
-      <img src={mbdslogo} alt="mbdslogo" style={{ width: "200px" }} />
-      <h1>Introduction à React</h1>
-      <h2>A la découverte des premières notions de React</h2>
-    </header>
+  <header>
+  <img src={mbdslogo} alt="mbdslogo" className="logo" />
+  <h1>Introduction à React</h1>
+  <h2>A la découverte des premières notions de React</h2>
+</header>
+
   );
 }
+
 
 function MainContent() {
   const now = new Date();
@@ -35,18 +37,13 @@ function getRandomNote(list) {
 function Footer() {
   const annee = new Date().getFullYear();
   return (
-    <footer
-      style={{
-        textAlign: "center",
-        padding: "20px",
-        marginBottom: "40px",
-        color: "#ccc",
-      }}
-    >
+    <footer>
       {annee} - Barreau Sachy Edvaelle, Tous droits réservés.
     </footer>
   );
 }
+
+ 
 
 function App() {
   const [selectedMenu, setSelectedMenu] = useState("Notes");
