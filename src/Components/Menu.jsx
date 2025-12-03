@@ -1,14 +1,26 @@
-function Menu() {
+function Menu({ selected, onSelect }) {
+  const items = ["Notes", "Étudiants", "Matières", "A propos"];
+
   return (
-    <nav className="menu" >
-      <p onClick={() => alert("Notes")}>Notes</p>
-      <p onClick={() => alert("Étudiants")}>Étudiants</p>
-      <p onClick={() => alert("Matières")}>Matières</p>
-      <p onClick={() => alert("A propos")}>A propos</p>
+    <nav className="menu">
+      {items.map((item) => (
+        <p
+          key={item}
+          onClick={() => onSelect(item)}
+          className={selected === item ? "active" : ""}
+          style={{
+            cursor: "pointer",
+            padding: "8px 16px",
+            borderRadius: "6px",
+            background: selected === item ? "#1976d2" : "transparent",
+            color: selected === item ? "white" : "black",
+          }}
+        >
+          {item}
+        </p>
+      ))}
     </nav>
   );
 }
 
-
-
-export default Menu
+export default Menu;
