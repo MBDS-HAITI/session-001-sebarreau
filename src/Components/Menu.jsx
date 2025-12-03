@@ -4,20 +4,13 @@ function Menu({ selected, onSelect }) {
   return (
     <nav className="menu">
       {items.map((item) => (
-        <p
+        <button
           key={item}
+          className={selected === item ? "menu-btn active" : "menu-btn"}
           onClick={() => onSelect(item)}
-          className={selected === item ? "active" : ""}
-          style={{
-            cursor: "pointer",
-            padding: "8px 16px",
-            borderRadius: "6px",
-            background: selected === item ? "#1976d2" : "transparent",
-            color: selected === item ? "white" : "black",
-          }}
         >
           {item}
-        </p>
+        </button>
       ))}
     </nav>
   );

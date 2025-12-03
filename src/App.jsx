@@ -1,10 +1,10 @@
 import { useState } from "react";
-import mbdslogo from './assets/mbds_logo_transparent.svg';
+import mbdslogo from "./assets/mbds_logo_transparent.svg";
 import notes from "../data.json";
 
-import NoteDetail from "./Components/NoteDetail";
 import Menu from "./Components/Menu";
-import './App.css';
+import MenuContent from "./Components/MenuContent";
+import "./App.css";
 
 function Header() {
   return (
@@ -21,7 +21,8 @@ function MainContent() {
   return (
     <main style={{ textAlign: "center", marginTop: "20px" }}>
       <p>
-        Bonjour, on est le {now.toLocaleDateString()} et il est {now.toLocaleTimeString()}
+        Bonjour, on est le {now.toLocaleDateString()} et il est{" "}
+        {now.toLocaleTimeString()}
       </p>
     </main>
   );
@@ -39,7 +40,7 @@ function Footer() {
         textAlign: "center",
         padding: "20px",
         marginBottom: "40px",
-        color: "#ccc"
+        color: "#ccc",
       }}
     >
       {annee} - Barreau Sachy Edvaelle, Tous droits réservés.
@@ -57,15 +58,11 @@ function App() {
       <Header />
       <MainContent />
 
-      <Menu
-        selected={selectedMenu}
-        onSelect={setSelectedMenu}
-      />
-      
-      <h2 style={{textAlign:"center"}}>Menu sélectionné : {selectedMenu}</h2>
-     
+      <Menu selected={selectedMenu} onSelect={setSelectedMenu} />
 
-      <NoteDetail note={randomNote} />
+    
+      <MenuContent selected={selectedMenu} randomNote={randomNote} />
+
       <Footer />
     </>
   );
