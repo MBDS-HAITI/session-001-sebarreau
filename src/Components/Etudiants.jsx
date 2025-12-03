@@ -47,6 +47,7 @@ export default function Etudiants() {
         </TableBody>
       </Table>
     </TableContainer>
+    
   );
 }
 
