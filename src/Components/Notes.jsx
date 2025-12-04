@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -13,35 +13,52 @@ import TablePagination from "@mui/material/TablePagination";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
-import notesData from "../../data.json"; 
-
 function compare(a, b, field) {
   if (field === "course") {
-    return a.course.localeCompare(b.course);
+    const aVal = a.course?.name || "";
+    const bVal = b.course?.name || "";
+    return aVal.localeCompare(bVal);
   }
   if (field === "date") {
-    return a.date.localeCompare(b.date);
+    const aVal = a.date || "";
+    const bVal = b.date || "";
+    return aVal.localeCompare(bVal);
   }
   if (field === "grade") {
-    return a.grade - b.grade;
+    const aVal = Number(a.grade || 0);
+    const bVal = Number(b.grade || 0);
+    return aVal - bVal;
   }
   return 0;
 }
 
 export default function Notes() {
+  const [notes, setNotes] = useState([]);
+
   const [orderBy, setOrderBy] = useState("course");
-  const [order, setOrder] = useState("asc"); 
+  const [order, setOrder] = useState("asc");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [search, setSearch] = useState("");
+  
 
-  const filteredNotes = notesData.filter((note) => {
+  useEffect(() => {
+    fetch("http://localhost:8010/api/grades")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("GRADES depuis l'API :", data);
+        setNotes(data);
+      })
+      .catch((err) => console.error("Erreur API GRADES :", err));
+  }, []);
+
+  const filteredNotes = notes.filter((note) => {
     const text = (
-      note.course +
+      (note.course?.name || "") +
       " " +
-      note.student.firstname +
+      (note.student?.firstName || "") +
       " " +
-      note.student.lastname
+      (note.student?.lastName || "")
     ).toLowerCase();
     return text.includes(search.toLowerCase());
   });
@@ -76,7 +93,7 @@ export default function Notes() {
 
   return (
     <>
-      <Box className="search-bar">
+      <Box className="search-bar" sx={{ mb: 2 }}>
         <TextField
           size="small"
           label="Rechercher un nom..."
@@ -129,13 +146,24 @@ export default function Notes() {
 
           <TableBody>
             {pagedNotes.map((row) => (
-              <TableRow key={row.unique_id}>
-                <TableCell>{row.course}</TableCell>
+              <TableRow
+                key={
+                  row._id ||
+                  `${row.course?._id || row.course?.name}-${
+                    row.date
+                  }-${row.student?._id || row.student?.id}`
+                }
+              >
+                <TableCell>{row.course?.name}</TableCell>
                 <TableCell>
-                  {row.student.firstname} {row.student.lastname} (#
-                  {row.student.id})
+                  {row.student?.firstName} {row.student?.lastName}{" "}
+                  {row.student?._id && <>#{row.student._id}</>}
                 </TableCell>
-                <TableCell>{row.date}</TableCell>
+                <TableCell>
+                  {row.date
+                    ? new Date(row.date).toLocaleDateString()
+                    : ""}
+                </TableCell>
                 <TableCell align="right">{row.grade}</TableCell>
               </TableRow>
             ))}

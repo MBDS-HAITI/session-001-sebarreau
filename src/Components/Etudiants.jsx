@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -13,32 +12,32 @@ import TablePagination from "@mui/material/TablePagination";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
-import notes from "../../data.json";
-
 export default function Etudiants() {
-  const map = new Map();
-
-  notes.forEach((n) => {
-    const s = n.student;
-    if (!map.has(s.id)) {
-      map.set(s.id, {
-        id: s.id,
-        firstname: s.firstname,
-        lastname: s.lastname,
-      });
-    }
-  });
-
-  const etudiants = Array.from(map.values());
-
-  const [orderBy, setOrderBy] = useState("lastname");
+  const [etudiants, setEtudiants] = useState([]);
+  const [orderBy, setOrderBy] = useState("lastName");
   const [order, setOrder] = useState("asc");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [search, setSearch] = useState("");
 
+  useEffect(() => {
+    fetch("http://localhost:8010/api/students")
+      .then((res) => res.json())
+      .then((data) => {
+        const list = data.map((s) => ({
+          id: s._id,                    
+          firstName: s.firstName || "", 
+          lastName: s.lastName || "",
+        }));
+        setEtudiants(list);
+      })
+      .catch((err) =>
+        console.error("Erreur API STUDENTS pour étudiants :", err)
+      );
+  }, []);
+
   const filtered = etudiants.filter((e) => {
-    const text = `${e.id} ${e.firstname} ${e.lastname}`.toLowerCase();
+    const text = `${e.id} ${e.firstName} ${e.lastName}`.toLowerCase();
     return text.includes(search.toLowerCase());
   });
 
@@ -46,11 +45,7 @@ export default function Etudiants() {
     const aVal = a[orderBy];
     const bVal = b[orderBy];
 
-    if (typeof aVal === "number" && typeof bVal === "number") {
-      return order === "asc" ? aVal - bVal : bVal - aVal;
-    }
-
-    const res = String(aVal).localeCompare(String(bVal));
+    const res = String(aVal || "").localeCompare(String(bVal || ""));
     return order === "asc" ? res : -res;
   });
 
@@ -59,27 +54,9 @@ export default function Etudiants() {
     page * rowsPerPage + rowsPerPage
   );
 
-  const handleRequestSort = (field) => {
-    if (orderBy === field) {
-      setOrder(order === "asc" ? "desc" : "asc");
-    } else {
-      setOrderBy(field);
-      setOrder("asc");
-    }
-  };
-
-  const handleChangePage = (_, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   return (
     <>
-      <Box className="search-bar">
+      <Box className="search-bar" sx={{ mb: 2 }}>
         <TextField
           size="small"
           label="Rechercher un étudiant..."
@@ -96,35 +73,9 @@ export default function Etudiants() {
         <Table sx={{ minWidth: 650 }} aria-label="students table">
           <TableHead>
             <TableRow>
-              <TableCell>
-                <TableSortLabel
-                  active={orderBy === "id"}
-                  direction={orderBy === "id" ? order : "asc"}
-                  onClick={() => handleRequestSort("id")}
-                >
-                  Id
-                </TableSortLabel>
-              </TableCell>
-
-              <TableCell>
-                <TableSortLabel
-                  active={orderBy === "firstname"}
-                  direction={orderBy === "firstname" ? order : "asc"}
-                  onClick={() => handleRequestSort("firstname")}
-                >
-                  Prénom
-                </TableSortLabel>
-              </TableCell>
-
-              <TableCell>
-                <TableSortLabel
-                  active={orderBy === "lastname"}
-                  direction={orderBy === "lastname" ? order : "asc"}
-                  onClick={() => handleRequestSort("lastname")}
-                >
-                  Nom
-                </TableSortLabel>
-              </TableCell>
+              <TableCell>Id</TableCell>
+              <TableCell>Prénom</TableCell>
+              <TableCell>Nom</TableCell>
             </TableRow>
           </TableHead>
 
@@ -132,18 +83,10 @@ export default function Etudiants() {
             {paged.map((row) => (
               <TableRow key={row.id}>
                 <TableCell>{row.id}</TableCell>
-                <TableCell>{row.firstname}</TableCell>
-                <TableCell>{row.lastname}</TableCell>
+                <TableCell>{row.firstName}</TableCell>
+                <TableCell>{row.lastName}</TableCell>
               </TableRow>
             ))}
-
-            {paged.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={3} align="center">
-                  Aucun étudiant trouvé.
-                </TableCell>
-              </TableRow>
-            )}
           </TableBody>
         </Table>
       </TableContainer>
@@ -152,9 +95,11 @@ export default function Etudiants() {
         component="div"
         count={sorted.length}
         page={page}
-        onPageChange={handleChangePage}
+        onPageChange={(_, newPage) => setPage(newPage)}
         rowsPerPage={rowsPerPage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+        onRowsPerPageChange={(e) =>
+          setRowsPerPage(parseInt(e.target.value, 10))
+        }
         labelRowsPerPage="Lignes par page"
       />
     </>
