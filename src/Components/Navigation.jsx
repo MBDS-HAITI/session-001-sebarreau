@@ -12,7 +12,7 @@ export default function Navigation() {
   return (
     <div className="content-container">
       <Routes>
-        {/* 👉 redirection de la racine vers /notes */}
+
         <Route path="/" element={<Navigate to="/notes" replace />} />
 
         <Route path="/notes" element={<Notes />} />
@@ -20,7 +20,6 @@ export default function Navigation() {
         <Route path="/matieres" element={<Matieres />} />
         <Route path="/apropos" element={<Apropos />} />
 
-        {/* optionnel : si route inconnue, on renvoie vers /notes */}
         <Route path="*" element={<Navigate to="/notes" replace />} />
       </Routes>
     </div>
