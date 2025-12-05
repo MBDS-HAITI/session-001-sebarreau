@@ -12,7 +12,7 @@ import Box from "@mui/material/Box";
 import TablePagination from "@mui/material/TablePagination";
 import TableSortLabel from "@mui/material/TableSortLabel";
 
-export default function Cours() {
+export default function Matieres() {
   const [courses, setCourses] = useState([]);
   const [search, setSearch] = useState("");
   const [orderBy, setOrderBy] = useState("name");
